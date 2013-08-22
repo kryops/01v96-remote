@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<title>01v96 Remote</title>
+	<link rel="stylesheet" href="01v96-remote.css">
+	<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+	<script src="lib/jquery-2.0.3.min.js"></script>
+	<script src="lib/hammerjs/hammer.min.js"></script>
+	<script src="lib/hammerjs/jquery.hammer.min.js"></script>
+	<script src="01v96-remote.js"></script>
+</head>
+<body>
+
+<div id="wrapper">
+
+	<div id="top">
+		
+		<div id="headline">
+			01v96 Remote
+		</div>
+		
+		<ul id="navi" class="hidden">
+			<!--
+			<li data-tab="settings" title="Settings"><i class="icon-cog"></i></li>
+			-->
+			
+			<li id="toggle-fullscreen" title="Toggle fullscreen"><i class="icon-fullscreen"></i></li>
+		</ul>
+		
+	</div>
+
+	<div id="content">
+		
+		<!--
+		<div class="control" data-id="c_channel1" data-target="channel" data-number="1">
+			<div class="on-button">
+				ON
+			</div>
+			
+			<div class="fader">
+				<div class="fader-bar">
+					<div class="fader-background"></div>
+					<div class="fader-level" style="height:50%"></div>
+				</div>
+				
+				<div class="fader-handle"></div>
+			</div>
+			
+			<div class="fader-biglabel">
+				1
+			</div>
+			
+			<div class="fader-label">
+				Label
+			</div>
+			
+			<div class="fader-settings">
+				<i class="icon-cog"></i>
+			</div>
+		</div>
+		-->
+		
+		<div class="tabcontent" data-tab="settings">
+			SETTINGS
+		</div>
+		
+		
+		<div id="loading-dialog" class="dialog">
+			<div class="dialog-content dialog-center">
+				<div class="dialog-spacer"></div>
+				<p id="loading-dialog-text">Initializing 01v96 Remote...</p>
+				<div class="loading-animation"></div>
+			</div>
+		</div>
+		
+		<div id="error-dialog" class="dialog">
+			<div class="dialog-content dialog-center">
+				<p class="dialog-headline">
+					<i class="icon-warning-sign"></i>
+					ERROR
+					
+					<span class="dialog-subheadline">
+						(This isn't even remotely funny!)
+					</span>
+				</p>
+				<p id="error-dialog-text">Error message</p>
+				<p id="error-dialog-reload" onclick="window.location.reload()" title="reload page">
+					<i class="icon-refresh"></i>
+				</p>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+
+</body>
+</html>

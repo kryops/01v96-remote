@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="15"
+   height="300"
+   id="svg4247"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="fader-level.svg"
+   inkscape:export-filename="C:\Users\Michael\Downloads\node\01v96\client\img\fader-level.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
+  <defs
+     id="defs4249" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="-79.122047"
+     inkscape:cy="142.50649"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1600"
+     inkscape:window-height="838"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4252">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-429.12205,-394.47699)">
+    <g
+       transform="matrix(0.62391777,0,0,0.77420444,245.59262,39.587513)"
+       id="g3811">
+      <rect
+         style="color:#000000;fill:#13c11d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3797"
+         width="24.04163"
+         height="46.669048"
+         x="294.15643"
+         y="799.21796" />
+      <rect
+         y="742.4137"
+         x="294.15643"
+         height="46.669048"
+         width="24.04163"
+         id="rect3799"
+         style="color:#000000;fill:#13c11d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <rect
+         style="color:#000000;fill:#13c11d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3801"
+         width="24.04163"
+         height="46.669048"
+         x="294.15643"
+         y="685.60944" />
+      <rect
+         y="628.80524"
+         x="294.15643"
+         height="46.669048"
+         width="24.04163"
+         id="rect3803"
+         style="color:#000000;fill:#13c11d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <rect
+         style="color:#000000;fill:#13c11d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3805"
+         width="24.04163"
+         height="46.669048"
+         x="294.15643"
+         y="572.00098" />
+      <rect
+         y="515.19672"
+         x="294.15643"
+         height="46.669048"
+         width="24.04163"
+         id="rect3807"
+         style="color:#000000;fill:#dedd0d;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <rect
+         style="color:#000000;fill:#fc0000;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3809"
+         width="24.04163"
+         height="46.669048"
+         x="294.15643"
+         y="458.39246" />
+    </g>
+  </g>
+</svg>
