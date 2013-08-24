@@ -7,6 +7,7 @@ var config = {
 	
 	channelCount: 32,
 	auxCount: 8,
+	auxSendCount: 2,
 	busCount: 8,
 	
 	// sysEx message beginnings, general and device-specific
@@ -80,7 +81,7 @@ var config = {
 	
 	// interval for remote meter level transmission to the client
 	// value*50msec
-	remoteMeterInterval: 5
+	remoteMeterInterval: 2
 };
 
 var controller = {
@@ -477,7 +478,7 @@ var controller = {
 	},
 	
 	setAuxSendFader: function(aux, channel, value) {
-		if(aux < 1 || aux > config.auxCount) {
+		if(aux < 1 || aux > config.auxSendCount) {
 			console.log('invalid aux send number ' + aux);
 			return;
 		}
@@ -587,7 +588,7 @@ var controller = {
 		}
 		
 		// aux send: requests for all channels for all aux
-		for(i = 1; i <= config.auxCount; i++) {
+		for(i = 1; i <= config.auxSendCount; i++) {
 			auxSendParam = config.auxSendParam(i);
 			
 			for(j = 0; j < config.channelCount; j++) {
