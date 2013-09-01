@@ -1,4 +1,25 @@
-﻿var midi = require('midi');
+﻿var midi;
+
+// load MIDI interface
+switch(process.argv[2]) {
+	
+	// MIDI over serial port, e.g. on the Raspberry Pi
+	case 'serialport':
+		console.log('Using MIDI serial port adapter');
+		midi = require('./midi-serialport.js');
+		break;
+	
+	// test dummy
+	case 'dummy':
+		console.log('Using MIDI test dummy');
+		midi = require('./midi-dummy.js');
+		break;
+	
+	// standard MIDI interface
+	default:
+		console.log('Using standard MIDI controller');
+		midi = require('midi');
+}
 
 /**
  * device-specific configuration
@@ -111,8 +132,6 @@ var controller = {
 	start: function(messageCallback) {
 		var i, portCount,
 			foundPort = false;
-		
-		console.log('Starting 01v96 MIDI controller');
 		
 		// save callback function from server
 		if(typeof messageCallback != 'undefined') {

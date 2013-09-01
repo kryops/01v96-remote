@@ -1,15 +1,18 @@
 ﻿var http = require('http'),
 	WebSocketServer = require('websocket').server,
 	static = require('node-static'),
-	
-	// MIDI interface to the mixer
-	mixer = require('./01v96-midi.js');
+	mixer;
 
-
+// WebSocket and HTTP server port configuration
 var config = {
 	staticPort: 1337,
 	webSocketPort: 1338
 };
+
+console.log('\n\n=== 01v96 Remote server by Michael Strobel ===\n\nRunning on port ' + config.staticPort + '\n');
+
+//MIDI interface to the mixer
+mixer = require('./01v96-midi.js');
 
 // global WebSocket connection pool
 var connections = [];
@@ -60,9 +63,6 @@ http.createServer(function (request, response) {
 }).listen(config.staticPort);
 
 
-console.log('\n\n=== 01v96 Remote server by Michael Strobel ===\n\nRunning on port ' + config.staticPort + '\n\n');
-
-
 // start mixer controller with socket broadcast callback function
 mixer.controller.start(function(message) {
 	var i,
@@ -73,4 +73,8 @@ mixer.controller.start(function(message) {
 			connections[i].sendUTF(content);
 		}
 	}
+});
+
+process.on('exit', function() {
+	wsHTTPServer.shutDown();
 });

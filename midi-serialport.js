@@ -99,13 +99,13 @@ var midi = {
 	input: function() {
 		this.on = function(type, callback) {
 			midi.callback = callback;
-		}
+		};
 	},
 	
 	output: function() {
 		this.sendMessage = function(message) {
 			serialPort.write(message);
-		}
+		};
 	}
 	
 };

@@ -331,6 +331,10 @@ var remoteApp = {
 		
 		app.connection.onerror = function(error) {
 			console.log('WebSocket error', error);
+			app.displayError('A WebSocket error occured!', true);
+		};
+		
+		app.connection.onclose = function() {
 			app.displayError('The connection to the server has been lost!', true);
 		};
 		
@@ -633,7 +637,7 @@ var remoteApp = {
 			if(target == 'auxsend') {
 				id = 'channel' + $control.data('number');
 				target = 'channel';
-				newValue = !app.status.on[id]
+				newValue = !app.status.on[id];
 			}
 			
 			app.status.on[id] = newValue;
@@ -812,7 +816,7 @@ var remoteApp = {
 				on: true,
 				fader: true,
 				level: true
-			}
+			};
 		}
 		
 		// update on-button status
