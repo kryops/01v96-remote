@@ -1,0 +1,11 @@
+﻿{
+	"name"			: "01v96-remote",
+	"version"		: "0.0.0",
+	"main"			: "server.js",
+	"dependencies"	: {
+		"websocket"		: "*",
+		"node-static"  	: "*",
+		"midi"	        : "*",
+		"serialport"	: "*"
+	}
+}

@@ -1,2 +1,2 @@
-node 01v96-remote-server.js
+node server.js
 pause

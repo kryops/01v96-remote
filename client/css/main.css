@@ -16,6 +16,9 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+    /* native fast clicks on Metro IE */
+    -ms-touch-action: none;
 }
 
 #wrapper {
@@ -133,7 +136,7 @@ body {
 	left:2px;
 	right:2px;
 	bottom:2px;
-	background-image:url(img/fader-level.svg);
+	background-image:url(../img/fader-level.svg);
 	background-size:auto 100%;
 	background-repeat:repeat-x;
 }
@@ -145,6 +148,7 @@ body {
 	right:1px;
 	max-height:calc(100% - 2px);
 	background-color:#13222d;
+    transition:all 0.2s;
 }
 
 .fader-handle {
@@ -228,7 +232,7 @@ body {
 }
 
 .loading-animation {
-	background-image:url(img/loading.gif);
+	background-image:url(../img/loading.gif);
 	background-size:100% 100%;
 	width:110px;
 	height:10px;

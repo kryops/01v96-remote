@@ -1,12 +1,25 @@
 // connect to Raspberry Pi serial port
 var SerialPort = require("serialport").SerialPort;
 var serialPort = new SerialPort("/dev/ttyAMA0", {
-	baudrate: 38400
+    baudrate: 38400
 });
+
+var listener = false,
+    portOpened = false;
+
+
+var transmitMessage = function(message) {
+    if(listener) {
+        listener(message);
+    }
+};
+
 
 serialPort.on('open', function() {
 	
-	console.log('serial port opened');
+	console.log('[mixer_serialport] Serial port opened');
+
+    portOpened = true;
 	
 	var message = [];
 	
@@ -15,8 +28,6 @@ serialPort.on('open', function() {
 		var obj = data.toJSON(),
 			startPosition,
 			endPosition;
-		
-		
 		
 		while(true) {
 			if(!obj.length) {
@@ -27,13 +38,13 @@ serialPort.on('open', function() {
 			endPosition = obj.indexOf(247);
 			
 			// 240 ...
-			if(startPosition == 0) {
+			if(startPosition === 0) {
 				// 240 ... 247 ... --> send
-				if(endPosition != -1) {
+				if(endPosition !== -1) {
 					message = obj.slice(0, endPosition+1);
 					obj = obj.slice(endPosition+1);
 					
-					midi.callback(0, message);
+					transmitMessage(message);
 					message = [];
 				}
 				// 240 ... |
@@ -49,7 +60,7 @@ serialPort.on('open', function() {
 					message = message.concat(obj.slice(0, endPosition+1));
 					obj = obj.slice(endPosition+1);
 					
-					midi.callback(0, message);
+					transmitMessage(message);
 					message = [];
 				}
 				// ... |
@@ -73,46 +84,18 @@ serialPort.on('open', function() {
 	
 });
 
-// emulate midi plugin with dummy
-var midiPrototype = {
-	
-	openPort: function(port) {},
-	
-	getPortCount: function() {
-		return 1;
-	},
-	
-	getPortName: function(port) {
-		return "Yamaha 01V96";
-	},
-	
-	ignoreTypes: function() {},
-	
-	closePort: function() {}
-	
+
+
+module.exports = {
+
+    setListener: function(l) {
+        listener = l;
+    },
+
+    send: function(message) {
+        if(portOpened) {
+            serialPort.write(message);
+        }
+    }
+
 };
-
-var midi = {
-	
-	callback: function(deltaTime, message) {},
-	
-	input: function() {
-		this.on = function(type, callback) {
-			midi.callback = callback;
-		};
-	},
-	
-	output: function() {
-		this.sendMessage = function(message) {
-			serialPort.write(message);
-		};
-	}
-	
-};
-
-midi.input.prototype = midiPrototype;
-midi.output.prototype = midiPrototype;
-
-
-exports.input = midi.input;
-exports.output = midi.output;
