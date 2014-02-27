@@ -39,8 +39,13 @@ var init = function() {
 
 
     // periodical remote meter request
-    setInterval(sendRemoteMeterRequest, 10000);
     sendRemoteMeterRequest();
+    setInterval(sendRemoteMeterRequest, 10000);
+
+    // periodical sync request
+    fillStatus();
+    sendSyncRequest();
+    setInterval(sendSyncRequest, 17000);
 
 };
 
@@ -55,6 +60,8 @@ var config = {
     auxCount: 8,
     auxSendCount: 2,
     busCount: 8,
+
+    faderThreshold: 5,
 
     // sysEx message beginnings, general and device-specific
     sysExStart: [240,67,48,62],
@@ -131,12 +138,70 @@ var config = {
 };
 
 
+var status = {
+
+    on: {
+        sum0: false
+    },
+    fader: {
+        sum0: 0
+    }
+
+};
+
+/**
+ * Fills status object with zero-values
+ */
+var fillStatus = function() {
+    var i, j;
+
+    // channels
+
+    i = config.channelCount + 1;
+
+    while(--i) {
+        status.on['channel' + i] = false;
+        status.fader['channel' + i] = 0;
+    }
+
+    // aux sends
+
+    j = config.auxSendCount + 1;
+
+    while(--j) {
+        i = config.channelCount + 1;
+
+        while(--i) {
+            status.fader['auxsend' + j + i] = 0;
+        }
+    }
+
+
+    // master
+
+    i = config.auxCount + 1;
+
+    while(--i) {
+        status.on['aux' + i] = false;
+        status.fader['aux' + i] = 0;
+    }
+
+    i = config.busCount + 1;
+
+    while(--i) {
+        status.on['bus' + i] = false;
+        status.fader['bus' + i] = 0;
+    }
+
+};
+
+
 /**
  * dispatch MIDI messages and execute server callback
  */
 var deviceMessageHandler = function(message) {
     var outMessage = false,
-        i,
+        num, num2, value, i,
 
         messageBeginsWith = function(search) {
             var length = search.length,
@@ -153,6 +218,10 @@ var deviceMessageHandler = function(message) {
             }
 
             return true;
+        },
+
+        aboveThreshold = function(val1, val2) {
+            return (Math.abs(val1 - val2) >= config.faderThreshold);
         };
 
     // concatenate messages that are longer than the 1024 byte limit
@@ -217,84 +286,164 @@ var deviceMessageHandler = function(message) {
             switch(message[6]) {
 
                 case config.sysExElements.channelFader:
+                    num = message[8]+1;
+                    value = config.data2Fader(message.slice(9));
+
+                    if(!aboveThreshold(value, status.fader['channel' + num])) {
+                        return;
+                    }
+
+                    status.fader['channel' + num] = value;
+
                     outMessage = {
                         type: "fader",
                         target: "channel",
-                        num: message[8]+1,
-                        value: config.data2Fader(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.sumFader:
+                    value = config.data2Fader(message.slice(9));
+
+                    if(!aboveThreshold(value, status.fader['sum0'])) {
+                        return;
+                    }
+
+                    status.fader['sum0'] = value;
+
                     outMessage = {
                         type: "fader",
                         target: "sum",
                         num: 0,
-                        value: config.data2Fader(message.slice(9))
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.auxSendFader:
+                    num = message[8]+1;
+                    num2 = (message[7]+1)/3;
+                    value = config.data2Fader(message.slice(9));
+
+                    if(!aboveThreshold(value, status.fader['auxsend' + num2 + num])) {
+                        return;
+                    }
+
+                    status.fader['auxsend' + num2 + num] = value;
+
                     outMessage = {
                         type: "fader",
                         target: "auxsend",
-                        num: message[8]+1,
-                        num2: (message[7]+1)/3,
-                        value: config.data2Fader(message.slice(9))
+                        num: num,
+                        num2: num2,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.auxFader:
+                    num = message[8]+1;
+                    value = config.data2Fader(message.slice(9));
+
+                    if(!aboveThreshold(value, status.fader['aux' + num])) {
+                        return;
+                    }
+
+                    status.fader['aux' + num] = value;
+
                     outMessage = {
                         type: "fader",
                         target: "aux",
-                        num: message[8]+1,
-                        value: config.data2Fader(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.busFader:
+                    num = message[8]+1;
+                    value = config.data2Fader(message.slice(9));
+
+                    if(!aboveThreshold(value, status.fader['bus' + num])) {
+                        return;
+                    }
+
+                    status.fader['bus' + num] = value;
+
                     outMessage = {
                         type: "fader",
                         target: "bus",
-                        num: message[8]+1,
-                        value: config.data2Fader(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.channelOn:
+                    num = message[8]+1;
+                    value = config.data2On(message.slice(9));
+
+                    if(value === status.on['channel' + num]) {
+                        return;
+                    }
+
+                    status.on['channel' + num] = value;
+
                     outMessage = {
                         type: "on",
                         target: "channel",
-                        num: message[8]+1,
-                        value: config.data2On(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.sumOn:
+                    value = config.data2On(message.slice(9));
+
+                    if(value === status.on['sum0']) {
+                        return;
+                    }
+
+                    status.on['sum0'] = value;
+
                     outMessage = {
                         type: "on",
                         target: "sum",
                         num: 0,
-                        value: config.data2On(message.slice(9))
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.auxOn:
+                    num = message[8]+1;
+                    value = config.data2On(message.slice(9));
+
+                    if(value === status.on['aux' + num]) {
+                        return;
+                    }
+
+                    status.on['aux' + num] = value;
+
                     outMessage = {
                         type: "on",
                         target: "aux",
-                        num: message[8]+1,
-                        value: config.data2On(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
                 case config.sysExElements.busOn:
+                    num = message[8]+1;
+                    value = config.data2On(message.slice(9));
+
+                    if(value === status.on['bus' + num]) {
+                        return;
+                    }
+
+                    status.on['bus' + num] = value;
+
                     outMessage = {
                         type: "on",
                         target: "bus",
-                        num: message[8]+1,
-                        value: config.data2On(message.slice(9))
+                        num: num,
+                        value: value
                     };
                     break;
 
@@ -322,8 +471,15 @@ var deviceMessageHandler = function(message) {
  *			num2: {int} aux number for target auxsend
  *	 		value: {int} / {bool}
  *		}
+ * @param socket Client connection
  */
-var clientMessageHandler = function(message) {
+var clientMessageHandler = function(message, socket) {
+
+    // convert auxsend on to channel on
+    if(message.type === 'on' && message.target === 'auxsend') {
+        message.target = 'channel';
+    }
+
 
     switch(message.type) {
 
@@ -379,8 +535,18 @@ var clientMessageHandler = function(message) {
             break;
 
         case "sync":
-            sendSyncRequest();
+
+            app.controllers.socket.send(socket, {
+                type: 'sync',
+                status: status
+            });
+
             break;
+    }
+
+    // broadcast to other clients
+    if(message.type !== 'sync') {
+        app.controllers.socket.broadcastToOthers(socket, message);
     }
 };
 
@@ -400,6 +566,8 @@ var setChannelFader = function(channel, value) {
             [config.sysExElements.channelFader,0,channel-1].concat(config.fader2Data(value))
         )
     );
+
+    status.fader['channel' + channel] = value;
 };
 
 var setChannelOn = function(channel, on) {
@@ -413,6 +581,8 @@ var setChannelOn = function(channel, on) {
             [config.sysExElements.channelOn,0,channel-1].concat(config.on2Data(on))
         )
     );
+
+    status.on['channel' + channel] = on;
 };
 
 var setSumFader = function(value) {
@@ -421,6 +591,8 @@ var setSumFader = function(value) {
             [config.sysExElements.sumFader,0,0].concat(config.fader2Data(value))
         )
     );
+
+    status.fader['sum0'] = value;
 };
 
 var setSumOn = function(on) {
@@ -429,6 +601,8 @@ var setSumOn = function(on) {
             [config.sysExElements.sumOn,0,0].concat(config.on2Data(on))
         )
     );
+
+    status.on['sum0'] = on;
 };
 
 var setAuxSendFader = function(aux, channel, value) {
@@ -447,6 +621,8 @@ var setAuxSendFader = function(aux, channel, value) {
             [config.sysExElements.auxSendFader,config.auxSendParam(aux),channel-1].concat(config.fader2Data(value))
         )
     );
+
+    status.fader['auxsend' + aux + channel] = value;
 };
 
 var setAuxFader = function(aux, value) {
@@ -460,6 +636,8 @@ var setAuxFader = function(aux, value) {
             [config.sysExElements.auxFader,0,aux-1].concat(config.fader2Data(value))
         )
     );
+
+    status.fader['aux' + aux] = value;
 };
 
 var setAuxOn = function(aux, on) {
@@ -473,6 +651,8 @@ var setAuxOn = function(aux, on) {
             [config.sysExElements.auxOn,0,aux-1].concat(config.on2Data(on))
         )
     );
+
+    status.on['aux' + aux] = on;
 };
 
 var setBusFader = function(bus, value) {
@@ -486,6 +666,8 @@ var setBusFader = function(bus, value) {
             [config.sysExElements.busFader,0,bus-1].concat(config.fader2Data(value))
         )
     );
+
+    status.fader['bus' + bus] = value;
 };
 
 var setBusOn = function(bus, on) {
@@ -499,6 +681,8 @@ var setBusOn = function(bus, on) {
             [config.sysExElements.busOn,0,bus-1].concat(config.on2Data(on))
         )
     );
+
+    status.on['bus' + bus] = on;
 };
 
 /*

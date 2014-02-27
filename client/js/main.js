@@ -299,10 +299,6 @@ var remoteApp = {
 		// sync with mixer
 		$('#loading-dialog-text').html('Syncing with the mixing console...');
 		
-		window.setTimeout(function() {
-			$('#loading-dialog').fadeOut('slow');
-		}, 1000);
-		
 		this.sendMessage({
 			type: "sync"
 		});
@@ -495,7 +491,7 @@ var remoteApp = {
         }
 
 		// on-buttons
-		$content.on('click', '.on-button', function(e) {
+		$content.on('click', '.on-button', function() {
 			app.eventAbstraction.onButton(
 				$(this).parents('.control')
 			);
@@ -747,13 +743,22 @@ var remoteApp = {
 			controls, i, updateType;
 		
 		// update all levels with one message
-		if(message.type == 'level') {
+		if(message.type === 'level') {
 			for(i in message.levels) {
 				app.status.level['channel'+i] = message.levels[i];
 			}
 			
 			app.updateTabControls(false, {level: true});
 		}
+        // complete sync
+        else if(message.type === 'sync') {
+            app.status.fader = message.status.fader;
+            app.status.on = message.status.on;
+
+            app.updateTabControls(false, {fader: true, on: true});
+
+            $('#loading-dialog').fadeOut(400);
+        }
 		// update fader and on-button per channel
 		else if(app.status[message.type] && app.status[message.type][id] !== message.value) {
 			

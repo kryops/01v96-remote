@@ -24,7 +24,7 @@ var init = function() {
         var connection = request.accept(null, request.origin);
         connections.push(connection);
 
-        console.log('[websocket] Client connected: ' + connection.remoteAddress);
+        console.log('[socket] Client connected: ' + connection.remoteAddress);
 
 
         // message handling
@@ -37,13 +37,13 @@ var init = function() {
                 obj = JSON.parse(message.utf8Data);
             }
             catch(e) {
-                console.log('[websocket] Invalid JSON message received:', message.utf8Data);
+                console.log('[socket] Invalid JSON message received:', message.utf8Data);
                 console.log(e);
                 return;
             }
 
             while(i--) {
-                listeners[i](obj);
+                listeners[i](obj, connection);
             }
 
         });
@@ -51,7 +51,7 @@ var init = function() {
         // socket closed: remove client from connection pool
 
         connection.on('close', function() {
-            console.log('[websocket] Closed connection: ' + connection.remoteAddress);
+            console.log('[socket] Closed connection: ' + connection.remoteAddress);
 
             var index = connections.indexOf(connection);
 
@@ -66,8 +66,18 @@ var init = function() {
         wsHTTPServer.shutDown();
     });
 
-    console.log('[static] WebSocket server started at port ' + app.config.webSocketPort);
+    console.log('[socket] WebSocket server started at port ' + app.config.webSocketPort);
 
+};
+
+var send = function(socket, message) {
+    var content = message;
+
+    if(typeof(message) !== 'string') {
+        content = JSON.stringify(message);
+    }
+
+    socket.sendUTF(content);
 };
 
 /**
@@ -88,6 +98,26 @@ var broadcast = function(message) {
 };
 
 /**
+ * Broadcast message to all clients except one
+ * @param socket has to be contained in the connections array
+ * @param {string | object} message Objects are converted to JSON string
+ */
+var broadcastToOthers = function(socket, message) {
+    var i = connections.length,
+        content = message;
+
+    if(typeof(message) !== 'string') {
+        content = JSON.stringify(message);
+    }
+
+    while(i--) {
+        if(connections[i] !== socket) {
+            connections[i].sendUTF(content);
+        }
+    }
+};
+
+/**
  * Add WebSocket message listener
  * @param listener
  */
@@ -104,7 +134,9 @@ module.exports = function(globalApp) {
     app.events.on('ready', init);
 
     return {
+        send: send,
         broadcast: broadcast,
+        broadcastToOthers: broadcastToOthers,
         addListener: addListener
     };
 

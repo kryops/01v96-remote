@@ -55,7 +55,6 @@ If your system is ALSA based, you need to have the *libasound2-dev* package inst
 -	Press the **MIDI** button and go to the **SETUP** tab
 -	Set both the *Tx* and *Rx CHANNEL* to *1*
 -	Set *Tx* and *Rx* in the *PARAMETER CHANGE* row to *ON*, all other options to *OFF*
--	If you plan to use multiple remote controls simultanely, set the *ECHO* option in the *PARAMETER CHANGE* row to *ON*
 -	Set *Fader Resolution* to *LOW*
 
 
