@@ -550,7 +550,7 @@ var remoteApp = {
                     e.preventDefault();
                     e.stopPropagation();
 
-                    app.status.movedFaders[$control.data('id')] = false;
+                    app.eventAbstraction.faderStop($control);
                 }, false);
 
             }
@@ -576,7 +576,7 @@ var remoteApp = {
                         e.preventDefault();
                         e.stopPropagation();
 
-                        app.status.movedFaders[$control.data('id')] = false;
+                        app.eventAbstraction.faderStop($control);
                     };
 
                 if(window.PointerEvent) {
@@ -598,7 +598,7 @@ var remoteApp = {
 	eventAbstraction: {
 		
 		/**
-		 * touchstart/mousedown/MSPointerDown on fader
+		 * touchstart/mousedown/pointerdown/MSPointerDown on fader
 		 * @param $control {jQuery} .control object
 		 * @param position {int} y touch/mouse position
 		 */
@@ -611,7 +611,7 @@ var remoteApp = {
 		},
 		
 		/**
-		 * touchmove/mousemove/MSPointerMove on fader
+		 * touchmove/mousemove/pointermove/MSPointerMove on fader
 		 * @param $control {jQuery} .control object
 		 * @param position {int} y touch/mouse position
 		 */
@@ -619,7 +619,11 @@ var remoteApp = {
 			var app = remoteApp,
 				$handle = $control.find('.fader-handle'),
 				id = $control.data('id');
-			
+
+            if(!app.status.movedFaders[id]) {
+                return;
+            }
+
 			// compute and apply position
 			var newPositionPx = $control.data('originalPosition')+position - $control.data('touchPosition'),
 				newPositionPercent = newPositionPx/app.status.faderHeight * 100,
@@ -654,6 +658,14 @@ var remoteApp = {
 				$control.data('number2')
 			);
 		},
+
+        /**
+         * touchstop/mouseup/pointerup/MSPointerUp
+         * @param $control
+         */
+        faderStop: function($control) {
+            remoteApp.status.movedFaders[$control.data('id')] = false;
+        },
 		
 		/**
 		 * touch/click on-button
