@@ -474,6 +474,7 @@ var deviceMessageHandler = function(message) {
  * @param socket Client connection
  */
 var clientMessageHandler = function(message, socket) {
+    var i, j, groupId;
 
     // convert auxsend on to channel on
     if(message.type === 'on' && message.target === 'auxsend') {
@@ -545,8 +546,44 @@ var clientMessageHandler = function(message, socket) {
     }
 
     // broadcast to other clients
-    if(message.type !== 'sync') {
+    if(message.type === 'fader' || message.type === 'on') {
         app.controllers.socket.broadcastToOthers(socket, message);
+
+        // apply to all channels of group
+
+        if(message.target === 'channel' || message.target === 'auxsend') {
+            i = app.clientConfig.groups.length;
+
+            while(i--) {
+                if(app.clientConfig.groups[i].indexOf(message.num) !== -1) {
+                    j = app.clientConfig.groups[i].length;
+
+                    while(j--) {
+                        groupId = app.clientConfig.groups[i][j];
+
+                        if(groupId !== message.num) {
+                            if(message.type === 'fader') {
+                                status.fader[message.target + (message.num2 || '') + groupId] = message.value;
+                            }
+                            else {
+                                status.on['channel' + groupId] = message.value;
+                            }
+
+                            // broadcast group changes to other clients
+                            app.controllers.socket.broadcastToOthers(socket, {
+                                type: message.type,
+                                target: message.target,
+                                num: groupId,
+                                num2: message.num2,
+                                value: message.value
+                            });
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
     }
 };
 

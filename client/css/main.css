@@ -42,6 +42,12 @@ body {
 	margin-top:-8px;
 }
 
+@media screen and (max-width:920px) {
+    #headline {
+        display:none;
+    }
+}
+
 #navi {
 	list-style-type:none;
 	margin:0;
@@ -87,9 +93,14 @@ body {
 	text-align:center;
 }
 
+.tabcontent-dynamic {
+    height:auto;
+    text-align:left;
+    white-space:normal
+}
+
 .control {
 	width:5.2%;
-	min-width:45px;
 	max-width:100px;
 	height:100%;
 	margin-right:0.7%;
@@ -97,6 +108,12 @@ body {
 	text-align:center;
 	position:relative;
 	-webkit-tap-highlight-color: rgba(0,0,0,0); 
+}
+
+@media screen and (orientation:portrait) {
+    .control {
+        height:60%;
+    }
 }
 
 .control:last-child {
@@ -110,6 +127,11 @@ body {
 	background-color:#116284;
 	padding:8px 4px;
 	cursor:pointer;
+}
+
+.group {
+    height:1px;
+    margin-top:8px;
 }
 
 .fader {
@@ -155,8 +177,8 @@ body {
 	width:100%;
 	height:15%;
 	position:absolute;
-	top:0px;
-	left:0px;
+	top:0;
+	left:0;
 	background-color:rgba(26,26,26,0.95);
 	border:1px solid #fff;
 	cursor:pointer;
@@ -178,8 +200,10 @@ body {
 }
 
 .fader-label {
-	font-size:75%;
+	font-size:60%;
 	margin-bottom:1em;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .fader-settings {
@@ -260,4 +284,66 @@ body {
 	font-size:350%;
 	cursor:pointer;
 	margin-top:0;
+}
+
+/* configuration */
+h2 {
+    font-family:Segoe UI, Calibri, Sans-Serif;
+    font-size:18pt;
+    font-weight:normal;
+}
+
+.grid-3 > div {
+    display:inline-block;
+    width:32.5%;
+    padding:10px;
+    padding-top:0;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    vertical-align:top;
+}
+
+.small {
+    font-size:80%;
+}
+
+.center {
+    text-align:center;
+    margin:auto;
+}
+
+textarea, input, button {
+    font-family:Segoe UI, Calibri, Sans-Serif;
+    font-size:12pt;
+    color:#fff;
+    background-color:#13222d;
+    padding:8px;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    border:1px solid #fff;
+}
+
+button {
+    padding:10px 15px;
+}
+
+#configuration label {
+    display:inline-block;
+    width:15%;
+    text-align:center;
+}
+
+#configuration input {
+    width:80%;
+}
+
+#configuration textarea {
+    width:100%;
+    height:300px;
+}
+
+#configuration p {
+    margin:.5em 0;
 }

@@ -3,3 +3,4 @@
 .~
 .buildpath
 .idea
+config/*.js

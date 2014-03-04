@@ -21,49 +21,57 @@
 		</div>
 		
 		<ul id="navi" class="hidden">
-			<!--
-			<li data-tab="settings" title="Settings"><i class="icon-cog"></i></li>
-			-->
-
+			<li data-tab="configuration" title="Configuration"><i class="icon-cog"></i></li>
 		</ul>
 		
 	</div>
 
 	<div id="content">
 		
-		<!--
-		<div class="control" data-id="c_channel1" data-target="channel" data-number="1">
-			<div class="on-button">
-				ON
-			</div>
-			
-			<div class="fader">
-				<div class="fader-bar">
-					<div class="fader-background"></div>
-					<div class="fader-level" style="height:50%"></div>
-				</div>
-				
-				<div class="fader-handle"></div>
-			</div>
-			
-			<div class="fader-biglabel">
-				1
-			</div>
-			
-			<div class="fader-label">
-				Label
-			</div>
-			
-			<div class="fader-settings">
-				<i class="icon-cog"></i>
-			</div>
+		<div class="tabcontent tabcontent-dynamic" data-tab="configuration" id="configuration">
+
+            <div id="configuration_loading" class="center">
+                <p>Loading configuration...</p>
+                <div class="loading-animation"></div>
+            </div>
+
+            <div id="configuration_content">
+                <div class="grid-3">
+                    <div>
+                        <h2>Channel names</h2>
+
+                        <div id="configuration_channels">
+
+                            <!--
+                            <label>A1</label>
+                            <input type="text" />
+                            -->
+
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Master names</h2>
+
+                        <div id="configuration_master"></div>
+                    </div>
+                    <div>
+                        <h2>Pairs / Groups</h2>
+
+                        <textarea id="configuration_groups"></textarea>
+
+                        <p class="small">
+                            One line per group
+                            <br />
+                            channel numbers separated with commas
+                        </p>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <button id="configuration_save">Save configuration</button>
+                </div>
+             </div>
 		</div>
-		-->
-		
-		<div class="tabcontent" data-tab="settings">
-			SETTINGS
-		</div>
-		
 		
 		<div id="loading-dialog" class="dialog">
 			<div class="dialog-content dialog-center">

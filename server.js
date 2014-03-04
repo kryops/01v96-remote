@@ -8,6 +8,11 @@ var app = {
         webSocketPort: 1338
     },
 
+    clientConfig: {
+        names: {},
+        groups: []
+    },
+
     events: require('./server/modules/events'),
 
     controllers: {}
