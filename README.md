@@ -11,15 +11,22 @@ So far it has implemented
 -	controlling faders for channels, aux send, master (aux and bus outputs) and stereo out
 -	controlling on-buttons for channels, master and stereo out
 -	Showing the meter levels of all channels
+-   Configuring channel names and pairs/groups
+
+
+![01v96 Remote](http://kryops.de/files/github/01v96remote.png)
+
 
 
 ## License
 
 MIT
 
+
+
 ## Installation
 
-### node.js server
+### Installation on a PC / development environment
 
 The node.js server can be obtained at [http://nodejs.org/](http://nodejs.org/)
 
@@ -43,9 +50,18 @@ In order to compile the required modules, your system needs to support the pytho
 
 **Note for Linux users**
 
-If your system is ALSA based, you need to have the *libasound2-dev* package installed in order to compile the midi module.
+-   If your system is ALSA based, you need to have the *libasound2-dev* package installed in order to compile the midi module.
+-   make sure the *config* directory is writable for the node.JS-Server
 
 
+### Installation on a Raspberry Pi
+
+The application can be deployed to a Raspberry Pi micro computer. It can be configured to receive MIDI signals through its GPIO ports.
+
+The documentation for the installation on a Raspberry Pi can be found in the file *raspberry/documentation.md*
+
+
+## Usage
 
 ### 01v96 MIDI configuration
 
@@ -58,7 +74,7 @@ If your system is ALSA based, you need to have the *libasound2-dev* package inst
 -	Set *Fader Resolution* to *LOW*
 
 
-## Usage
+### NodeJS server
 
 Start the server from the command line:
 
@@ -67,14 +83,170 @@ Start the server from the command line:
 
 From Windows you can start it with the *01v96-remote-server.bat* file.
 
-The program can only be started when the 01v96 is connected and configured correctly. MIDI error messages are shown in the command line output.
+The program can only be started when the 01v96 is connected, running and configured correctly. MIDI error messages are shown in the console output.
+
+With an optional parameter, the connection type to the mixer can be chosen:
+
+-   **midi** *(default)* uses the standard MIDI protocol
+-   **serialport** connects through the serial port on */dev/ttyAMA0* (for use with a Raspberry Pi)
+-   **dummy** allows to test the application without a real mixer present. It simulates changing fader levels and a moving fader
+
+
+### Web client
 
 The web client can be accessed at port 1337. You have to use a browser that supports WebSockets. Look up browser support at [http://caniuse.com/websockets](http://caniuse.com/websockets).
 
 
-## Third party software
+## Development
 
-01v96 Remote uses the following libraries and extensions:
+### WebSocket protocol
+
+The WebSocket service can be reached on port 1338
+
+#### Messages sent by the server
+
+**Fader value**
+
+Channel groups: Message is sent for every channel
+
+    {
+        "type": "fader",
+         "target": "channel" / "sum" / "auxsend" / "aux" / "bus",
+         "num": < channel/aux/bus number, 0 for sum >,
+         "num2": < aux number (if target is "auxsend") >
+         "value": < fader value, 0-255 >
+    }
+
+**On-buttons**
+
+Channel groups: Message is sent for every channel
+
+    {
+        "type": "on",
+         "target": "channel" / "sum" / "aux" / "bus",
+         "num": < channel/aux/bus number, 0 for sum >,
+         "value": < true for on, false for off >
+    }
+
+**Channel meter levels**
+
+Sent every 200ms
+
+    {
+        "type": "level",
+         "levels": {
+            < channel number, 1-32 >: < channel level, 0-32 >,
+            // ...
+         }
+    }
+
+**Complete status synchronization**
+
+    {
+        "type": "sync",
+        "status": {
+            "on": {
+                "channel< channel number>": < boolean value >,
+                "aux< aux number>": < boolean value >,
+                "bus< aux number>": < boolean value >,
+                "sum0": < boolean value >,
+                // ...
+            },
+            "fader": {
+                "channel< channel number>": < value 0-255 >,
+                "auxsend< aux number >< channel number>": < value 0-255 >,
+                "aux< aux number>": < value 0-255 >,
+                "bus< aux number>": < value 0-255 >,
+                "sum0": < value 0-255 >,
+                // ...
+            }
+        }
+    }
+
+**Configuration**
+
+    {
+        "type": "config",
+        "config": {
+            "names": {
+                "channel< channel number>": < name >,
+                "aux< aux number>": < name >,
+                "bus< aux number>": < name >,
+                // ...
+            },
+            "groups": [
+                [ < channel numbers in a group > ],
+                // ...
+            ]
+        }
+    }
+
+#### Messages sent by the clients
+
+**Request synchronization**
+
+    {
+        "type": "sync"
+    }
+
+**Request configuration**
+
+    {
+        "type": "config"
+    }
+
+**Save configuration**
+
+Triggers a broadcast of the new configuration to all other connected clients
+
+    {
+        "type": "config_save",
+        "config": {
+            "names": {
+                "channel< channel number>": < name >,
+                "aux< aux number>": < name >,
+                "bus< aux number>": < name >,
+                // ...
+            },
+            "groups": [
+                [ < channel numbers in a group > ],
+                // ...
+            ]
+        }
+    }
+
+**Fader value**
+
+Triggers a broadcast of the new value to all other connected clients
+
+Channel groups: Has to be send only for one channel. Broadcast to other clients contains all channels in the group
+
+    {
+        "type": "fader",
+         "target": "channel" / "sum" / "auxsend" / "aux" / "bus",
+         "num": < channel/aux/bus number, 0 for sum >,
+         "num2": < aux number (if target is "auxsend") >
+         "value": < fader value, 0-255 >
+    }
+
+
+**On-button**
+
+Triggers a broadcast of the new value to all other connected clients
+
+Channel groups: Has to be send only for one channel. Broadcast to other clients contains all channels in the group
+
+    {
+        "type": "on",
+         "target": "channel" / "sum" / "aux" / "bus",
+         "num": < channel/aux/bus number, 0 for sum >,
+         "value": < true for on, false for off >
+    }
+
+
+## Additional notes
+
+### Third party software
 
 -	jQuery -  http://jquery.com/
 -	FastClick - https://github.com/ftlabs/fastclick

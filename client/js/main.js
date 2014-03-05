@@ -961,6 +961,7 @@ var remoteApp = {
         // names
 
         $('.fader-label').html('&nbsp;');
+        $('#configuration').find('input[type="text"]').val('');
 
         for(i in app.config.persistent.names) {
             if(app.config.persistent.names.hasOwnProperty(i)) {
