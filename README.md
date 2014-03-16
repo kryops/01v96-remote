@@ -28,6 +28,8 @@ MIT
 
 ### Installation on a PC / development environment
 
+In order to connect the 01v96 to the PC via USB, please install the latest USB-MIDI driver from [http://www.yamahaproaudio.com/global/en/downloads/firmware_software/](http://www.yamahaproaudio.com/global/en/downloads/firmware_software/)
+
 The node.js server can be obtained at [http://nodejs.org/](http://nodejs.org/)
 
 The following additional modules have to be installed through npm:

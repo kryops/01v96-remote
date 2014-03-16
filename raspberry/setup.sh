@@ -12,12 +12,21 @@ fi
 # MIDI serial port configuration
 # source: http://www.siliconstuff.com/2012/08/serial-port-midi-on-raspberry-pi.html
 
-sed 's/console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 //'  /boot/cmdline.txt > /boot/cmdline.txt
+sed 's/console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 /bcm2708.uart_clock=3000000 /'  /boot/cmdline.txt > /home/pi/cmdline.txt
+cat /home/pi/cmdline.txt > /boot/cmdline.txt
+rm /home/pi/cmdline.txt
+
+sed 's/T0:23:respawn:\/sbin\/getty -L ttyAMA0/#T0:23:respawn:\/sbin\/getty -L ttyAMA0/' /etc/inittab > /home/pi/inittab
+cat /home/pi/inittab > /etc/inittab
+rm /home/pi/inittab
+
 echo '
 # change uart clock to 2441406 for midi 31250 baud rate
 init_uart_clock=2441406
 init_uart_baud=38400
 ' >> /boot/config.txt
+
+usermod -a -G dialout pi
 
 # create directories
 
@@ -39,6 +48,7 @@ wget http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz
 tar xvzf node-v0.10.24-linux-arm-pi.tar.gz
 cp -r node-v0.10.24-linux-arm-pi/* /opt/node
 rm -f -r node-v0.10.24-linux-arm-pi
+rm node-v0.10.24-linux-arm-pi.tar.gz
 
 # Create symlinks for PATH and root access
 ln -s /opt/node/bin/node /usr/bin/node
@@ -72,7 +82,8 @@ echo '#!/bin/bash
 
 NAME="Forever NodeJS"
 EXE=/usr/bin/forever
-SCRIPT="/home/pi/01v96-remote/server.js serialport"
+SCRIPT=/home/pi/01v96-remote/server.js
+PARAMS=serialport
 USER=pi
 OUT=/var/log/01v96-remote/forever.log
 
@@ -85,8 +96,8 @@ fi
 case "$1" in
 
 start)
-    echo "starting $NAME: $EXE $PARAM"
-    sudo -u $USER $EXE start -a -l $OUT $SCRIPT
+    echo "starting $NAME: $SCRIPT $PARAMS"
+    sudo -u $USER $EXE start -a -l $OUT $SCRIPT $PARAMS
     ;;
 
 stop)

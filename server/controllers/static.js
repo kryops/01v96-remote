@@ -6,7 +6,7 @@ var http = require('http'),
 
 var init = function() {
     var fileServer = new static.Server(
-        './client',
+        __dirname + '/../../client',
         {
             cache: 0
         }

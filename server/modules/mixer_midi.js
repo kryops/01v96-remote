@@ -2,7 +2,6 @@
     input = new midi.input(),
     output = new midi.output(),
 
-    foundPort = false,
     listener = false,
 
     inputPortCount = input.getPortCount(),
@@ -13,6 +12,13 @@
 
     i;
 
+var transmitMessage = function(deltaTime, message) {
+    if(listener) {
+        listener(message);
+    }
+};
+
+input.on('message', transmitMessage);
 
 // find input port
 
@@ -55,7 +61,6 @@ for(i = 0; i < outputPortCount; i++) {
 if(!foundOutputPort) {
     console.log('[mixer_midi] ERROR: No 01v96 device found! (output port)');
 }
-
 
 
 module.exports = {

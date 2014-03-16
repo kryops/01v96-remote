@@ -4,13 +4,41 @@ The Raspberry Pi is configured to receive the MIDI signal through its serial por
 
 **Configuration and software installation can be automated by executing the setup.sh script:**
 
-    chmod +x setup.sh
+    wget https://raw.github.com/kryops/01v96-remote/master/raspberry/setup.sh
+    sudo chmod +x setup.sh
     sudo ./setup.sh
 
 
-## Hardware and configuration
+## Hardware
 
 Follow the instructions on http://www.siliconstuff.com/2012/08/serial-port-midi-on-raspberry-pi.html
+
+## Configuration
+
+Remove the following content from */boot/cmdline.txt*:
+
+    console=ttyAMA0,115200 kgdboc=ttyAMA0,115200
+
+Then add the following to the same file:
+
+    bcm2708.uart_clock=3000000
+
+The */boot/cmdline.txt* should look **similar** to this:
+
+    dwc_otg.lpmenable=0 bcm2708.uart_clock=3000000 console=tty1 root=/dev/mmcblk0p6 rootfstype=ext4 elevator=deadline rootwait
+
+Add the following to */boot/config.txt*:
+
+    init_uart_clock=2441406
+    init_uart_baud=38400
+
+Comment out the last line in */etc/inittab* with #:
+
+    #T0:23:respawn:/sbin/getty -L ttyAMA0 115200 vt100
+
+Add the user pi to the dialout group:
+
+    usermod -a -G dialout pi
 
 ## Software
 
@@ -65,7 +93,8 @@ Create the file */etc/init.d/forever-01v96-remote* with the following content:
 
     NAME="Forever NodeJS"
     EXE=/usr/bin/forever
-    SCRIPT="/home/pi/01v96-remote/server.js serialport"
+    SCRIPT=/home/pi/01v96-remote/server.js
+    PARAMS=serialport
     USER=pi
     OUT=/var/log/01v96-remote/forever.log
 
@@ -78,8 +107,8 @@ Create the file */etc/init.d/forever-01v96-remote* with the following content:
     case "$1" in
 
     start)
-        echo "starting $NAME: $EXE $PARAM"
-        sudo -u $USER $EXE start -a -l $OUT $SCRIPT
+        echo "starting $NAME: $SCRIPT $PARAMS"
+        sudo -u $USER $EXE start -a -l $OUT $SCRIPT $PARAMS
         ;;
 
     stop)
