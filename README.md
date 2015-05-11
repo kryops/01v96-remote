@@ -26,39 +26,12 @@ MIT
 
 ## Installation
 
-### Installation on a PC / development environment
-
-In order to connect the 01v96 to the PC via USB, please install the latest USB-MIDI driver from [http://www.yamahaproaudio.com/global/en/downloads/firmware_software/](http://www.yamahaproaudio.com/global/en/downloads/firmware_software/)
-
-The node.js server can be obtained at [http://nodejs.org/](http://nodejs.org/)
-
-The following additional modules have to be installed through npm:
-
--	midi
--	websocket
--	node-static
--   serialport (for usage with Raspberry Pi)
-
-To install them, run the following command in the command line:
-
-	npm install
-
-**Note for Windows users**
-
-In order to compile the required modules, your system needs to support the python programming language and C++.
-
--	For pyhton support, install the latest application (from the 2.x branch!) from [http://www.python.org/download/](http://www.python.org/download/)
--	For C++ support, install the Microsoft Visual Studio express from [http://www.microsoft.com/visualstudio/eng/downloads#d-express-windows-desktop](http://www.microsoft.com/visualstudio/eng/downloads#d-express-windows-desktop) or a similar software
-
-**Note for Linux users**
-
--   If your system is ALSA based, you need to have the *libasound2-dev* package installed in order to compile the midi module.
--   make sure the *config* directory is writable for the node.JS-Server
-
 
 ### Installation on a Raspberry Pi
 
-The application can be deployed to a Raspberry Pi micro computer. It can be configured to receive MIDI signals through its GPIO ports.
+The application can be deployed to a Raspberry Pi micro computer.
+kryops orignal version was configured to receive MIDI signals through its GPIO ports.
+My altered version allows the Raspberry Pi to receive MIDI siganls over USB. Default USB drivers with raspbian.
 
 The documentation for the installation on a Raspberry Pi can be found in the file *raspberry/documentation.md*
 
@@ -82,15 +55,11 @@ Start the server from the command line:
 
 	node server.js
 
-
-From Windows you can start it with the *01v96-remote-server.bat* file.
-
-The program can only be started when the 01v96 is connected, running and configured correctly. MIDI error messages are shown in the console output.
-
 With an optional parameter, the connection type to the mixer can be chosen:
 
 -   **midi** *(default)* uses the standard MIDI protocol
 -   **serialport** connects through the serial port on */dev/ttyAMA0* (for use with a Raspberry Pi)
+-   **piUSB** connect through USB on the Raspberry Pi
 -   **dummy** allows to test the application without a real mixer present. It simulates changing fader levels and a moving fader
 
 
