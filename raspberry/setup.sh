@@ -9,22 +9,7 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 
-# MIDI serial port configuration
-# source: http://www.siliconstuff.com/2012/08/serial-port-midi-on-raspberry-pi.html
-
-sed 's/console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 /bcm2708.uart_clock=3000000 /'  /boot/cmdline.txt > /home/pi/cmdline.txt
-cat /home/pi/cmdline.txt > /boot/cmdline.txt
-rm /home/pi/cmdline.txt
-
-sed 's/T0:23:respawn:\/sbin\/getty -L ttyAMA0/#T0:23:respawn:\/sbin\/getty -L ttyAMA0/' /etc/inittab > /home/pi/inittab
-cat /home/pi/inittab > /etc/inittab
-rm /home/pi/inittab
-
-echo '
-# change uart clock to 2441406 for midi 31250 baud rate
-init_uart_clock=2441406
-init_uart_baud=38400
-' >> /boot/config.txt
+# MIDI over USB on Raspberry pi
 
 usermod -a -G dialout pi
 
@@ -39,7 +24,6 @@ chown pi /var/log/01v96-remote
 apt-get update
 apt-get -y upgrade
 apt-get -y install git python build-essential libasound2-dev
-
 
 # NodeJS setup
 
@@ -60,11 +44,9 @@ ln -s /opt/node/lib /usr/lib/node
 
 # Project setup
 cd /home/pi
-sudo -u pi git clone https://github.com/kryops/01v96-remote.git
+sudo -u pi git clone https://github.com/Shad-Rydalch/01v96-remote.git
 cd 01v96-remote
 sudo -u pi /usr/bin/npm install
-
-
 
 cd /home/pi
 
@@ -83,7 +65,7 @@ echo '#!/bin/bash
 NAME="Forever NodeJS"
 EXE=/usr/bin/forever
 SCRIPT=/home/pi/01v96-remote/server.js
-PARAMS=serialport
+PARAMS=piUSB
 USER=pi
 OUT=/var/log/01v96-remote/forever.log
 
@@ -119,7 +101,6 @@ exit 0
 
 chmod 755 /etc/init.d/forever-01v96-remote
 update-rc.d forever-01v96-remote defaults
-
 
 # finished
 
