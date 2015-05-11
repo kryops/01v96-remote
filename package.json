@@ -6,6 +6,7 @@
 		"websocket"		: "*",
 		"node-static"  	: "*",
 		"midi"	        : "*",
+		"piUSB"         : "*",
 		"serialport"	: "*"
 	}
 }
