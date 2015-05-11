@@ -38,7 +38,7 @@ The documentation for the installation on a Raspberry Pi can be found in the fil
 
 ## Usage
 
-### 01v96 MIDI over UISB configuration with Raspberry Pi
+### 01v96 MIDI over USB configuration with Raspberry Pi
 
 -	Press the **DIO/SETUP** button and go to the **MIDI/HOST** tab
 -	In the *GENERAL* area, Set both *Rx PORT* and *Tx PORT* to *USB* - *1*
