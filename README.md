@@ -38,15 +38,15 @@ The documentation for the installation on a Raspberry Pi can be found in the fil
 
 ## Usage
 
-### 01v96 MIDI configuration
+### 01v96 MIDI configuration for Raspberry Pi USB
 
 -	Press the **DIO/SETUP** button and go to the **MIDI/HOST** tab
--	In the *GENERAL* area set both *Rx PORT* and *Tx PORT* must to *1*
--	Set the port type to *USB* or *MIDI* depending on how your 01v96 is connected to your server device
+-	In the *GENERAL* area:
+-	    Set both *Rx PORT* and *Tx PORT* to *USB* - *1*
 -	Press the **MIDI** button and go to the **SETUP** tab
--	Set both the *Tx* and *Rx CHANNEL* to *1*
--	Set *Tx* and *Rx* in the *PARAMETER CHANGE* row to *ON*, all other options to *OFF*
--	Set *Fader Resolution* to *LOW*
+-	    Set both the *Tx* and *Rx CHANNEL* to *1*
+-	    Set *Tx* and *Rx* in the *PARAMETER CHANGE* row to *ON*, all other options to *OFF*
+-	    Set *Fader Resolution* to *LOW*
 
 
 ### NodeJS server
