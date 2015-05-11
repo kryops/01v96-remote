@@ -1,6 +1,6 @@
 # Setup on Raspberry Pi
 
-Altered kryops Raspberry Pi setup for MIDI over USB signal.
+Altered kryops Raspberry Pi setup for MIDI over USB.
 The application is run by forever which ensures that the Node.JS server is restarted after an exception occurs.
 
 **Configuration and software installation can be automated by executing the setup.sh script:**
