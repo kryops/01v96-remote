@@ -31,7 +31,7 @@ MIT
 
 The application can be deployed to a Raspberry Pi micro computer.
 -	kryops orignal version was configured to receive MIDI signals through its GPIO ports.
--	This altered version allows the Raspberry Pi to receive MIDI siganls over USB, using the default USB drivers with Raspbian.
+-	**This altered version allows the Raspberry Pi to receive MIDI signals over USB**, using the default USB drivers with Raspbian.
 
 The documentation for the installation on a Raspberry Pi can be found in the file *raspberry/documentation.md*
 
