@@ -14,6 +14,12 @@ var init = function() {
 
     switch(process.argv[2]) {
 
+        // MIDI over USB on the Raspberry Pi
+        case 'piUSB':
+            console.log('[mixer] Using MIDI over USB - Raspberry Pi');
+            device = require('../modules/mixer_piUSB');
+            break;
+
         // MIDI over serial port, e.g. on the Raspberry Pi
         case 'serialport':
             console.log('[mixer] Using MIDI serial port adapter');
