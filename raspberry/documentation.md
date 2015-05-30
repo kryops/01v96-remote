@@ -11,7 +11,9 @@ The Raspberry Pi is configured to receive the MIDI signal through its serial por
 
 ## Hardware
 
-Follow the instructions on http://www.siliconstuff.com/2012/08/serial-port-midi-on-raspberry-pi.html
+Follow the instructions on http://siliconstuff.blogspot.de/2012/08/serial-port-midi-on-raspberry-pi.html
+
+(PDF version included in the repository)
 
 ## Configuration
 
