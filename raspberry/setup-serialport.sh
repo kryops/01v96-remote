@@ -10,7 +10,7 @@ fi
 
 
 # MIDI serial port configuration
-# source: http://www.siliconstuff.com/2012/08/serial-port-midi-on-raspberry-pi.html
+# source: http://siliconstuff.blogspot.de/2012/08/serial-port-midi-on-raspberry-pi.html
 
 sed 's/console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 /bcm2708.uart_clock=3000000 /'  /boot/cmdline.txt > /home/pi/cmdline.txt
 cat /home/pi/cmdline.txt > /boot/cmdline.txt

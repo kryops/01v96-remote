@@ -12,6 +12,10 @@
 
     i;
 
+var matchPortName = function(name) {
+    return (name.indexOf('Yamaha 01V96') !== -1 || name.match(/01V96 ..:0/));
+};
+
 var transmitMessage = function(deltaTime, message) {
     if(listener) {
         listener(message);
@@ -23,9 +27,9 @@ input.on('message', transmitMessage);
 // find input port
 
 for(i = 0; i < inputPortCount; i++) {
-    if(input.getPortName(i).indexOf('Yamaha 01V96') !== -1) {
+    if(matchPortName(input.getPortName(i))) {
 
-        console.log('[mixer_midi] MIDI input port ' + i);
+        console.log('[mixer_midi] MIDI input port ' + i + ' / ' + input.getPortName(i));
 
         input.openPort(i);
 
@@ -46,9 +50,9 @@ if(!foundInputPort) {
 // find output port
 
 for(i = 0; i < outputPortCount; i++) {
-    if(output.getPortName(i).indexOf('Yamaha 01V96') !== -1) {
+    if(matchPortName(output.getPortName(i))) {
 
-        console.log('[mixer_midi] MIDI output port ' + i);
+        console.log('[mixer_midi] MIDI output port ' + i + ' / ' + output.getPortName(i));
 
         output.openPort(i);
 

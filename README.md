@@ -32,14 +32,7 @@ In order to connect the 01v96 to the PC via USB, please install the latest USB-M
 
 The node.js server can be obtained at [http://nodejs.org/](http://nodejs.org/)
 
-The following additional modules have to be installed through npm:
-
--	midi
--	websocket
--	node-static
--   serialport (for usage with Raspberry Pi)
-
-To install them, run the following command in the command line:
+Install dependencies:
 
 	npm install
 
@@ -58,7 +51,7 @@ In order to compile the required modules, your system needs to support the pytho
 
 ### Installation on a Raspberry Pi
 
-The application can be deployed to a Raspberry Pi micro computer. It can be configured to receive MIDI signals through its GPIO ports.
+The application can be deployed to a Raspberry Pi micro computer. It can be connected via USB or configured to receive MIDI signals through its GPIO ports.
 
 The documentation for the installation on a Raspberry Pi can be found in the file *raspberry/documentation.md*
 
@@ -68,7 +61,7 @@ The documentation for the installation on a Raspberry Pi can be found in the fil
 ### 01v96 MIDI configuration
 
 -	Press the **DIO/SETUP** button and go to the **MIDI/HOST** tab
--	In the *GENERAL* area set both *Rx PORT* and *Tx PORT* must to *1*
+-	In the *GENERAL* area set both *Rx PORT* and *Tx PORT* to *1*
 -	Set the port type to *USB* or *MIDI* depending on how your 01v96 is connected to your server device
 -	Press the **MIDI** button and go to the **SETUP** tab
 -	Set both the *Tx* and *Rx CHANNEL* to *1*
@@ -89,7 +82,7 @@ The program can only be started when the 01v96 is connected, running and configu
 
 With an optional parameter, the connection type to the mixer can be chosen:
 
--   **midi** *(default)* uses the standard MIDI protocol
+-   **midi** *(default)* uses the standard MIDI protocol - for MIDI ports and USB connections (also on Raspberry Pi - thanks to @Shad-Rydalch)
 -   **serialport** connects through the serial port on */dev/ttyAMA0* (for use with a Raspberry Pi)
 -   **dummy** allows to test the application without a real mixer present. It simulates changing fader levels and a moving fader
 
@@ -250,6 +243,15 @@ Channel groups: Has to be send only for one channel. Broadcast to other clients 
 
 ### Third party software
 
--	jQuery -  http://jquery.com/
+NPM modules
+
+-   websocket - https://github.com/theturtle32/WebSocket-Node
+-   node-static - https://github.com/cloudhead/node-static
+-   midi - https://github.com/justinlatimer/node-midi
+-   serialport - https://github.com/voodootikigod/node-serialport
+
+Libraries
+
+-	jQuery - http://jquery.com/
 -	FastClick - https://github.com/ftlabs/fastclick
 -	Font Awesome icons - http://fortawesome.github.io/Font-Awesome/
