@@ -1,11 +1,12 @@
 ﻿{
 	"name"			: "01v96-remote",
-	"version"		: "0.0.0",
+	"version"		: "1.0.0",
+  	"license"		: "MIT",
 	"main"			: "server.js",
 	"dependencies"	: {
-		"websocket"		: "*",
-		"node-static"  	: "*",
-		"midi"	        : "*",
-		"serialport"	: "*"
+		"websocket"		: "^1.0.19",
+		"node-static"  	: "^0.7.6",
+		"midi"	        : "^0.9.3",
+		"serialport"	: "^1.7.1"
 	}
 }
