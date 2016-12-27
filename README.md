@@ -14,7 +14,7 @@ So far it has implemented
 -   Configuring channel names and pairs/groups
 
 
-![01v96 Remote](http://kryops.de/files/github/01v96remote.png)
+![01v96 Remote](assets/screenshot.png)
 
 
 
