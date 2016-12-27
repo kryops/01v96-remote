@@ -1,20 +1,20 @@
-﻿{
-	"name": "01v96-remote",
-	"version": "1.0.0",
-	"author": "Michael Strobel",
-  	"license": "MIT",
-	"main": "server.js",
-	"description": "WebSocket-MIDI bridge for Yamaha 01v96 Edit",
-	"homepage": "https://github.com/kryops/01v96-remote",
-	"bugs": "https://github.com/kryops/01v96-remote/issues",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kryops/01v96-remote.git"
-	},
-	"dependencies": {
-		"websocket": "^1.0.19",
-		"node-static": "^0.7.6",
-		"midi": "^0.9.3",
-		"serialport": "^4.0.7"
-	}
+{
+  "name": "01v96-remote",
+  "version": "1.0.0",
+  "author": "Michael Strobel",
+  "license": "MIT",
+  "main": "server.js",
+  "description": "WebSocket-MIDI bridge for Yamaha 01v96 Edit",
+  "homepage": "https://github.com/kryops/01v96-remote",
+  "bugs": "https://github.com/kryops/01v96-remote/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kryops/01v96-remote.git"
+  },
+  "dependencies": {
+    "midi": "^0.9.3",
+    "node-static": "^0.7.6",
+    "serialport": "^4.0.7",
+    "uws": "^0.12.0"
+  }
 }

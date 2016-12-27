@@ -1,5 +1,5 @@
 var http = require('http'),
-    websocket = require('websocket'),
+    websocket = require('uws'),
 
     app,
 
@@ -7,40 +7,38 @@ var http = require('http'),
     listeners = [];
 
 
+function parseJson(message) {
+    try {
+        return JSON.parse(message);
+    }
+    catch(e) {
+        console.log('[socket] Invalid JSON message received:', message.utf8Data);
+        console.log(e);
+        return undefined;
+    }
+}
+
 var init = function() {
 
-    // create empty http server for socket handling
-    var wsHTTPServer = http.createServer(function(request, response) {});
-    wsHTTPServer.listen(app.config.webSocketPort);
-
-
     // create web socket server
-    var wsServer = new websocket.server({
-        httpServer: wsHTTPServer
+    var wsServer = new websocket.Server({
+        port: app.config.webSocketPort
     });
 
-    wsServer.on('request', function(request) {
+    wsServer.on('connection', function(connection) {
 
-        var connection = request.accept(null, request.origin);
         connections.push(connection);
 
-        console.log('[socket] Client connected: ' + connection.remoteAddress);
+        console.log('[socket] Client connected');
 
 
         // message handling
 
         connection.on('message', function(message) {
             var i = listeners.length,
-                obj;
+                obj = parseJson(message);
 
-            try {
-                obj = JSON.parse(message.utf8Data);
-            }
-            catch(e) {
-                console.log('[socket] Invalid JSON message received:', message.utf8Data);
-                console.log(e);
-                return;
-            }
+            if(obj === undefined) return;
 
             while(i--) {
                 listeners[i](obj, connection);
@@ -51,7 +49,7 @@ var init = function() {
         // socket closed: remove client from connection pool
 
         connection.on('close', function() {
-            console.log('[socket] Closed connection: ' + connection.remoteAddress);
+            console.log('[socket] Closed connection');
 
             var index = connections.indexOf(connection);
 
@@ -60,10 +58,6 @@ var init = function() {
             }
         });
 
-    });
-
-    process.on('exit', function() {
-        wsHTTPServer.shutDown();
     });
 
     console.log('[socket] WebSocket server started at port ' + app.config.webSocketPort);
@@ -77,7 +71,7 @@ var send = function(socket, message) {
         content = JSON.stringify(message);
     }
 
-    socket.sendUTF(content);
+    socket.send(content);
 };
 
 /**
@@ -93,7 +87,7 @@ var broadcast = function(message) {
     }
 
     while(i--) {
-        connections[i].sendUTF(content);
+        connections[i].send(content);
     }
 };
 
@@ -112,7 +106,7 @@ var broadcastToOthers = function(socket, message) {
 
     while(i--) {
         if(connections[i] !== socket) {
-            connections[i].sendUTF(content);
+            connections[i].send(content);
         }
     }
 };
