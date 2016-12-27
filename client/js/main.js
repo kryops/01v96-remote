@@ -117,28 +117,74 @@ var remoteApp = {
 				]
 			},
 
-			aux2: {
-				label: "AUX 2",
-				faders: [
-					["auxsend", 1, "1", 2],
-					["auxsend", 2, "2", 2],
-					["auxsend", 3, "3", 2],
-					["auxsend", 4, "4", 2],
-					["auxsend", 5, "5", 2],
-					["auxsend", 6, "6", 2],
-					["auxsend", 7, "7", 2],
-					["auxsend", 8, "8", 2],
-					["auxsend", 9, "9", 2],
-					["auxsend", 10, "10", 2],
-					["auxsend", 11, "11", 2],
-					["auxsend", 12, "12", 2],
-					["auxsend", 13, "13", 2],
-					["auxsend", 14, "14", 2],
-					["auxsend", 15, "15", 2],
-					["auxsend", 16, "16", 2],
-					["sum", 0, "S"]
-				]
-			},
+            aux2: {
+                label: "AUX 2",
+                faders: [
+                    ["auxsend", 1, "1", 2],
+                    ["auxsend", 2, "2", 2],
+                    ["auxsend", 3, "3", 2],
+                    ["auxsend", 4, "4", 2],
+                    ["auxsend", 5, "5", 2],
+                    ["auxsend", 6, "6", 2],
+                    ["auxsend", 7, "7", 2],
+                    ["auxsend", 8, "8", 2],
+                    ["auxsend", 9, "9", 2],
+                    ["auxsend", 10, "10", 2],
+                    ["auxsend", 11, "11", 2],
+                    ["auxsend", 12, "12", 2],
+                    ["auxsend", 13, "13", 2],
+                    ["auxsend", 14, "14", 2],
+                    ["auxsend", 15, "15", 2],
+                    ["auxsend", 16, "16", 2],
+                    ["sum", 0, "S"]
+                ]
+            },
+
+            aux3: {
+                label: "AUX 3",
+                faders: [
+                    ["auxsend", 1, "1", 3],
+                    ["auxsend", 2, "2", 3],
+                    ["auxsend", 3, "3", 3],
+                    ["auxsend", 4, "4", 3],
+                    ["auxsend", 5, "5", 3],
+                    ["auxsend", 6, "6", 3],
+                    ["auxsend", 7, "7", 3],
+                    ["auxsend", 8, "8", 3],
+                    ["auxsend", 9, "9", 3],
+                    ["auxsend", 10, "10", 3],
+                    ["auxsend", 11, "11", 3],
+                    ["auxsend", 12, "12", 3],
+                    ["auxsend", 13, "13", 3],
+                    ["auxsend", 14, "14", 3],
+                    ["auxsend", 15, "15", 3],
+                    ["auxsend", 16, "16", 3],
+                    ["sum", 0, "S"]
+                ]
+            },
+
+            aux4: {
+                label: "AUX 4",
+                faders: [
+                    ["auxsend", 1, "1", 4],
+                    ["auxsend", 2, "2", 4],
+                    ["auxsend", 3, "3", 4],
+                    ["auxsend", 4, "4", 4],
+                    ["auxsend", 5, "5", 4],
+                    ["auxsend", 6, "6", 4],
+                    ["auxsend", 7, "7", 4],
+                    ["auxsend", 8, "8", 4],
+                    ["auxsend", 9, "9", 4],
+                    ["auxsend", 10, "10", 4],
+                    ["auxsend", 11, "11", 4],
+                    ["auxsend", 12, "12", 4],
+                    ["auxsend", 13, "13", 4],
+                    ["auxsend", 14, "14", 4],
+                    ["auxsend", 15, "15", 4],
+                    ["auxsend", 16, "16", 4],
+                    ["sum", 0, "S"]
+                ]
+            },
 			
 			master: {
 				label: "MASTER",

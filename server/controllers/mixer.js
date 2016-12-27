@@ -58,7 +58,7 @@ var config = {
 
     channelCount: 32,
     auxCount: 8,
-    auxSendCount: 2,
+    auxSendCount: 4,
     busCount: 8,
 
     faderThreshold: 5,
