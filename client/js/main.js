@@ -116,7 +116,7 @@ var remoteApp = {
 					["sum", 0, "S"]
 				]
 			},
-			
+
 			aux2: {
 				label: "AUX 2",
 				faders: [
@@ -244,7 +244,7 @@ var remoteApp = {
 		// start after socket init and document.ready
 		this.status.pendingOperations--;
 		
-		if(this.status.pendingOperations) {
+		if(this.status.pendingOperations > 0) {
 			return;
 		}
 		
@@ -260,6 +260,8 @@ var remoteApp = {
         this.sendMessage({
             type: "config"
         });
+
+        this.hideError();
 	},
 	
 	/**
@@ -291,6 +293,9 @@ var remoteApp = {
 		
 		app.connection.onclose = function() {
 			app.displayError('The connection to the server has been lost!', true);
+			window.setTimeout(function() {
+				app.openSocketConnection();
+			}, 1000);
 		};
 		
 		app.connection.onmessage = function(message) {
@@ -1119,6 +1124,10 @@ var remoteApp = {
 		}
 		
 		$('#error-dialog').fadeIn(1000);
+	},
+
+	hideError: function() {
+        $('#error-dialog').fadeOut(1000);
 	}
 	
 };
