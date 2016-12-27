@@ -1,5 +1,5 @@
 // connect to Raspberry Pi serial port
-var SerialPort = require('serialport').SerialPort,
+var SerialPort = require('serialport'),
     fs = require('fs');
 
 var listener = false,

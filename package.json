@@ -15,6 +15,6 @@
 		"websocket": "^1.0.19",
 		"node-static": "^0.7.6",
 		"midi": "^0.9.3",
-		"serialport": "^1.7.1"
+		"serialport": "^4.0.7"
 	}
 }
