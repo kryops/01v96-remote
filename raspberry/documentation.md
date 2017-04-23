@@ -1,5 +1,7 @@
 # Setup on Raspberry Pi
 
+**wARNING: This documentation was created for the Raspberry (1) Model B using NodeJS v0.10.24. It has not been tested with the newer models or the newer NodeJS version that is now required. Please proceed with caution!**
+
 There are 2 options to connect the 01v96 to the Raspberry Pi:
 
 *   Connect via USB
