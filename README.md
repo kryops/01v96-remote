@@ -40,7 +40,7 @@ Install dependencies:
 
 In order to compile the required modules, your system needs to support the python programming language and C++.
 
--	For pyhton support, install the latest application (from the 2.x branch!) from [http://www.python.org/download/](http://www.python.org/download/)
+-	For python support, install the latest application (from the 2.x branch!) from [http://www.python.org/download/](http://www.python.org/download/)
 -	For C++ support, install the Microsoft Visual Studio express from [http://www.microsoft.com/visualstudio/eng/downloads#d-express-windows-desktop](http://www.microsoft.com/visualstudio/eng/downloads#d-express-windows-desktop) or a similar software
 
 **Note for Linux users**
@@ -75,6 +75,9 @@ Start the server from the command line:
 
 	node server.js
 
+or
+
+    npm run start
 
 From Windows you can start it with the *01v96-remote-server.bat* file.
 
@@ -245,7 +248,7 @@ Channel groups: Has to be send only for one channel. Broadcast to other clients 
 
 NPM modules
 
--   websocket - https://github.com/theturtle32/WebSocket-Node
+-   uws - https://github.com/uWebSockets/uWebSockets
 -   node-static - https://github.com/cloudhead/node-static
 -   midi - https://github.com/justinlatimer/node-midi
 -   serialport - https://github.com/voodootikigod/node-serialport
