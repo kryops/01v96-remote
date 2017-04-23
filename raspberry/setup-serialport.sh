@@ -81,7 +81,7 @@ echo '#!/bin/bash
 ### END INIT INFO
 
 NAME="Forever NodeJS"
-EXE=/usr/bin/forever
+EXE=/opt/node/bin/forever
 SCRIPT=/home/pi/01v96-remote/server.js
 PARAMS=serialport
 USER=pi
