@@ -11,6 +11,9 @@
     "type": "git",
     "url": "https://github.com/kryops/01v96-remote.git"
   },
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "midi": "^0.9.3",
     "node-static": "^0.7.6",
