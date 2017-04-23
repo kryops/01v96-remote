@@ -74,10 +74,10 @@ Install software dependencies:
 Install the Node.JS server:
 
     sudo mkdir /opt/node
-    wget http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz
-    tar xvzf node-v0.10.24-linux-arm-pi.tar.gz
-    sudo cp -r node-v0.10.24-linux-arm-pi/* /opt/node
-    rm -f -r node-v0.10.24-linux-arm-pi
+    wget http://nodejs.org/dist/v6.10.2/node-v6.10.2-linux-armv6l.tar.gz
+    tar xvzf node-v6.10.2-linux-armv6l.tar.gz
+    sudo cp -r node-v6.10.2-linux-armv6l/* /opt/node
+    rm -f -r node-v6.10.2-linux-armv6l
     sudo ln -s /opt/node/bin/node /usr/bin/node
     sudo ln -s /opt/node/bin/npm /usr/bin/npm
     sudo ln -s /opt/node/lib /usr/lib/node

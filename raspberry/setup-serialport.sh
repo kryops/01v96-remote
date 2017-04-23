@@ -44,11 +44,11 @@ apt-get -y install git python build-essential libasound2-dev
 # NodeJS setup
 
 mkdir /opt/node
-wget http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz
-tar xvzf node-v0.10.24-linux-arm-pi.tar.gz
-cp -r node-v0.10.24-linux-arm-pi/* /opt/node
-rm -f -r node-v0.10.24-linux-arm-pi
-rm node-v0.10.24-linux-arm-pi.tar.gz
+wget http://nodejs.org/dist/v6.10.2/node-v6.10.2-linux-armv6l.tar.gz
+tar xvzf node-v6.10.2-linux-armv6l.tar.gz
+cp -r node-v6.10.2-linux-armv6l/* /opt/node
+rm -f -r node-v6.10.2-linux-armv6l
+rm node-v6.10.2-linux-armv6l.tar.gz
 
 # Create symlinks for PATH and root access
 ln -s /opt/node/bin/node /usr/bin/node
