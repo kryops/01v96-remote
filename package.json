@@ -15,9 +15,9 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "midi": "^0.9.3",
-    "node-static": "^0.7.6",
-    "serialport": "^4.0.7",
-    "uws": "^0.14.1"
+    "midi": "^0.9.5",
+    "node-static": "^0.7.10",
+    "serialport": "^6.2.1",
+    "uws": "^10.148.1"
   }
 }
