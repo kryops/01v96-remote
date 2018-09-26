@@ -1,5 +1,5 @@
 var http = require('http'),
-    websocket = require('uws'),
+    websocket = require('ws'),
 
     app,
 
@@ -71,7 +71,11 @@ var send = function(socket, message) {
         content = JSON.stringify(message);
     }
 
-    socket.send(content);
+    try {
+        socket.send(content);
+    } catch(e) {
+        // do nothing
+    }
 };
 
 /**
@@ -87,7 +91,11 @@ var broadcast = function(message) {
     }
 
     while(i--) {
-        connections[i].send(content);
+        try {
+            connections[i].send(content);
+        } catch(e) {
+            // do nothing
+        }
     }
 };
 
@@ -106,7 +114,11 @@ var broadcastToOthers = function(socket, message) {
 
     while(i--) {
         if(connections[i] !== socket) {
-            connections[i].send(content);
+            try {
+                connections[i].send(content);
+            } catch(e) {
+                // do nothing
+            }
         }
     }
 };
