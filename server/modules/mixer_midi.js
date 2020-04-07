@@ -13,7 +13,7 @@
     i;
 
 var matchPortName = function(name) {
-    return (name.toLowerCase().indexOf('yamaha 01v96') !== -1 || name.match(/01V96 ..:0/i));
+    return (name.toLowerCase().indexOf('01v96') !== -1 || name.match(/01V96 ..:0/i));
 };
 
 var transmitMessage = function(deltaTime, message) {
