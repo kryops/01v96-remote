@@ -8,7 +8,7 @@ var listener = false,
 
 if(fs.existsSync('/dev/ttyAMA0')) {
     serialPort = new SerialPort('/dev/ttyAMA0', {
-        baudrate: 38400
+        baudRate: 38400
     });
 
     serialPort.on('open', function() {
