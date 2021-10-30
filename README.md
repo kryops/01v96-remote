@@ -2,6 +2,18 @@
 
 by Michael Strobel
 
+> ## UNMAINTAINED
+>
+> This project is no longer maintained.
+>
+> Check out its official successor [remote-mixer](https://github.com/kryops/remote-mixer):
+> - Includes all 8 AUX Sends through nested tabs
+> - Syncs channel names from and to the mixer
+> - Responsive / mobile-friendly
+> - Light mode for outside events during the day
+> - Support for mixers other than the 01v96
+
+
 This application is a MIDI bridge to the Yamaha 01v96 mixing console to remote-control it over a network-based connection via WebSocket.
 
 It is based on a node.js server and includes a web client that can be used on both mouse- and touch-based devices.
